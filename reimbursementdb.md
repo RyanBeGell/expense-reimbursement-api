@@ -3,16 +3,16 @@
 
 ### Database implementation of business rules
 
-* All expenses have a single employee as the issuer
-  * emp_id is a  foreign key that refers to the employee table's primary key (employee_id) to satisfy this constraint
+1. All expenses have a single employee as the issuer
+   * emp_id is a  foreign key that refers to the employee table's primary key (employee_id) to satisfy this constraint
   
 
-* Expenses may be approved by only one person
-  * Approved_by_emp_id also refers to employee_id to satisfy this constraint
+2. Expenses may be approved by only one person
+   * Approved_by_emp_id also refers to employee_id to satisfy this constraint
+  
 
-
-* Expenses start as pending (null) and will be approved or denied 
-  * approval_status from the expense table will be set to true or false 
+3. Expenses start as pending (null) and will be approved or denied 
+   * approval_status from the expense table will be set to true or false 
 
 ### PostgreSQL create table statements
 
