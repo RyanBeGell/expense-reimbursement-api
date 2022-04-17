@@ -1,6 +1,6 @@
 # Reimbursement Database
 ![Reimbursement_db_erd.png](https://i.imgur.com/ZLrnX7j.png)
-###Database implementation of business rules
+##Database implementation of business rules
 
 * All expenses have a single employee as the issuer
   * emp_id is a  foreign key that refers to the employee table's primary key (employee_id) to satisfy this constraint
@@ -13,7 +13,7 @@
 * Expenses start as pending (null) and will be approved or denied 
   * approval_status from the expense table will be set to true or false 
 
-###PostgreSQL create table statements
+##PostgreSQL create table statements
 
 ~~~postgresql 
 create table employee(
