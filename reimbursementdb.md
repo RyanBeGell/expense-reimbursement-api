@@ -12,7 +12,7 @@
   
 
 3. Expenses start as pending (null) and will be approved or denied 
-   * approval_status from the expense table will be set to true or false 
+   * approval_status from the expense table will be set null upon initialization and upon approval or denial set to true or false respectively 
 
 ### PostgreSQL create table statements
 
