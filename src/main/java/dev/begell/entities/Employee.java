@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Employee {
     int employeeId;
-    String pass;
-    String firstName;
-    String lastName;
-    String phoneNumber;
-    String email;
-    boolean isAdmin;
+    private String pass;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String email;
+    private boolean isAdmin;
 }
