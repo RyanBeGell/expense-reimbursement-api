@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Expense {
     private int expenseId;
-    @Setter(AccessLevel.NONE)   //stop the default lambok @data generated setter for amount
+    @Setter(AccessLevel.NONE)   //stop the lambok @data from auto-generating a setter for amount
     double amount;
     private int empId;
     private boolean approvalStatus;
@@ -19,6 +19,6 @@ public class Expense {
         if(amount > 0)
             this.amount = amount;
         else
-            throw new IllegalArgumentException("Expense amounts can not be negative");
+            throw new IllegalArgumentException("Expense amounts can not be negative.");
     }
 }

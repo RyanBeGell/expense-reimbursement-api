@@ -10,12 +10,8 @@
 2. Expenses may be approved by one employee
    * approved_by_emp_id from the expense table also refers to employee_id to satisfy this constraint
   
-
-3. Only employees which have admin authorization can approve or deny expenses
-   * the admin boolean variable from the employee table will be used to check for authorization
-
-
-4. Expenses start as pending (null) and will be approved or denied 
+   
+3. Expenses start as pending (null) and will be approved or denied 
    * approval_status from the expense table will be null upon initialization, and upon approval or denial set to true or false respectively 
 
 ### PostgreSQL create table statements

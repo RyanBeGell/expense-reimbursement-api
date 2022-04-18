@@ -18,5 +18,4 @@ public interface ExpenseDAO {
     //delete
     boolean deleteExpenseById(int id);
 
-
 }
