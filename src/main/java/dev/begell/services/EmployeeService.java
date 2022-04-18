@@ -6,6 +6,6 @@ public interface EmployeeService {
 
     Employee registerNewEmployee(Employee employee);
 
-    Employee getApproverByExpenseId(int id);    //find out who approved an expense
+//    Employee getApproverByExpenseId(int id);    //find out who approved an expense
 
 }

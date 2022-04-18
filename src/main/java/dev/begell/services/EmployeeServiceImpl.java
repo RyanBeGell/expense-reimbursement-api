@@ -8,7 +8,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return null;
     }
 
-    public Employee getApproverByExpenseId(int id) {
-        return null;
-    }
+//    public Employee getApproverByExpenseId(int id) {
+//        return null;
+//    }
 }

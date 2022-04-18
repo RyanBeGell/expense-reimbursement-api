@@ -12,8 +12,8 @@ public class Expense {
     double amount;
     private int empId;
     private boolean approvalStatus;
-    private int approverEmpId;
-    private String expenseDate;
+//    private int approverEmpId;
+    private int expenseDate;
 
     public void setAmount(double amount) {
         if(amount > 0)

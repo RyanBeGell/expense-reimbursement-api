@@ -1,5 +1,5 @@
 # Reimbursement Database
-![Reimbursement_db_erd.png](https://i.imgur.com/Wj9byCy.png)
+![Reimbursement_db_erd.png](https://i.imgur.com/7X0mHEB.png)
 
 ### Database implementation of business rules
 
@@ -23,12 +23,8 @@
 ~~~postgresql 
 create table employee(
 employee_id serial primary key, 
-password varchar(15),
 first_name varchar(20),
 last_name varchar(20),
-phone_number varchar(12), 
-email varchar(50),
-admin boolean
 );
 
 create table expense(
@@ -36,7 +32,6 @@ expense_id serial primary key,
 amount decimal,
 emp_id int references employee(employee_id),
 approval_status boolean,
-approved_by_emp_id int references employee(employee_id),
 expense_date date
 );
 ~~~
