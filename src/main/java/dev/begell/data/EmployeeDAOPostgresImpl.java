@@ -22,6 +22,7 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             rs.next();
             int generatedId = rs.getInt("employee_id");
             employee.setEmployeeId(generatedId);
+            log.info("Employee #" + employee.getEmployeeId() + "\tsuccessfully created.");
             return employee;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,7 +82,7 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
                 log.error(e.getMessage());
                 return null;
             }
-
+            log.info("Employee #" + employee.getEmployeeId() + "\tsuccessfully updated.");
             return employee;
 
         } catch (SQLException e) {
@@ -98,6 +99,7 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
+            log.info("Employee #" + id + "\tsuccessfully deleted.");
             return  true;
         } catch (SQLException e) {
             e.printStackTrace();
