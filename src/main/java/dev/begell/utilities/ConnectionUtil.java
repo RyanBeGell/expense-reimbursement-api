@@ -9,8 +9,7 @@ public class ConnectionUtil {
     public static Connection createConnection(){
 
         try {
-            Connection conn = DriverManager.getConnection(System.getenv("reimbursementdb"));
-            return conn;
+            return DriverManager.getConnection(System.getenv("reimbursementdb"));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
