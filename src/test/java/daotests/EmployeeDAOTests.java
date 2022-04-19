@@ -51,7 +51,9 @@ public class EmployeeDAOTests {
 
     @Test
     @Order(5)
-    void get_non_existent_Employee(){
+    void get_non_existent_Employee() {
+        System.out.println("This exception stack trace is an intentional");
+        System.out.println("-----------------------------------------------------------------------------------------");
         Assertions.assertNull(employeeDAO.getEmployeeById(10000));
     }
 }
