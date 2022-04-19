@@ -3,7 +3,7 @@
     <Appenders>
         <File name="MyFile" fileName="C:\Users\rbege\Desktop\Java_projects\ryan_begell_p1\src\applogs.log">
             <PatternLayout>
-                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+                <Pattern>%-5level %d{yyyy-MM-dd HH:mm:ss} [%t] %logger{36} - %msg%n</Pattern>
             </PatternLayout>
         </File>
     </Appenders>
