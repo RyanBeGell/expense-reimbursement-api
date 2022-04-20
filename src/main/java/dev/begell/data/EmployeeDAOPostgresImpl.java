@@ -5,6 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import dev.begell.entities.Employee;
 import dev.begell.utilities.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Log4j2
 public class EmployeeDAOPostgresImpl implements EmployeeDAO {
@@ -65,6 +67,34 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
         }
     }
 
+    @Override
+    public List<Employee> getAllEmployees() {
+        try {
+            Connection conn = ConnectionUtil.createConnection();
+            String sql = "select * from employee";
+            assert conn != null;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Employee> Employees = new ArrayList<>();
+            while (rs.next()){
+                Employee employee = new Employee();
+                employee.setEmployeeId(rs.getInt("employee_id"));
+                employee.setFirstName(rs.getString("first_name"));
+                employee.setLastName(rs.getString("last_name"));
+                Employees.add(employee);
+            }
+
+            return Employees;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public Employee updateEmployee(Employee employee) {
         try {
             Connection conn = ConnectionUtil.createConnection();

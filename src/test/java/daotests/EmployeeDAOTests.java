@@ -5,6 +5,8 @@ import dev.begell.data.EmployeeDAOPostgresImpl;
 import dev.begell.entities.Employee;
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //for running ordered test cases
 public class EmployeeDAOTests {
 
@@ -55,5 +57,19 @@ public class EmployeeDAOTests {
         System.out.println("This exception stack trace is an intentional");
         System.out.println("-----------------------------------------------------------------------------------------");
         Assertions.assertNull(employeeDAO.getEmployeeById(10000));
+    }
+
+    @Test
+    @Order(6)
+    void get_all_employees(){
+        Employee a = new Employee(0,"A","A");
+        Employee b = new Employee(0,"B","B");
+        Employee c = new Employee(0,"C","C");
+        employeeDAO.createEmployee(a);
+        employeeDAO.createEmployee(b);
+        employeeDAO.createEmployee(c);
+        List<Employee> employees = employeeDAO.getAllEmployees();
+        int totalEmployees = employees.size();
+        Assertions.assertTrue(totalEmployees >= 3);
     }
 }
