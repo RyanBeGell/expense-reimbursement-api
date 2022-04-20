@@ -7,23 +7,33 @@ import java.util.List;
 public class ExpenseServiceImpl implements ExpenseService {
 
 
+    @Override
     public Expense registerNewExpense(Expense expense) {
         return null;
     }
 
+    @Override
     public Expense retrieveExpenseById(Expense expense) {
         return null;
     }
 
+    @Override
     public Expense approveExpense(Expense expense) {
         return null;
     }
 
+    @Override
+    public Expense denyExpense(Expense expense) {
+        return null;
+    }
+
+    @Override
     public Expense deleteExpenseById(int id) {
         return null;
     }
 
-    public List<Expense> getAllExpensesById(int id) {
+    @Override
+    public List<Expense> getAllExpenses() {
         return null;
     }
 }

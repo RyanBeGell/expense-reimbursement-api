@@ -12,9 +12,10 @@ public interface ExpenseService {
 
     Expense approveExpense(Expense expense);
 
+    Expense denyExpense(Expense expense);
+
     Expense deleteExpenseById(int id);
 
-    List<Expense> getAllExpensesById(int id);
-
+    List<Expense> getAllExpenses();
 
 }
