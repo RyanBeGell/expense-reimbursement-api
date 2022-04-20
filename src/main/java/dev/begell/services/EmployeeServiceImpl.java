@@ -1,14 +1,20 @@
 package dev.begell.services;
 
+import dev.begell.data.EmployeeDAO;
 import dev.begell.entities.Employee;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
-    public Employee registerNewEmployee(Employee employee) {
-        return null;
+    final private EmployeeDAO employeeDAO;
+
+    //dependency injection
+    public EmployeeServiceImpl(EmployeeDAO employeeDAO){
+        this.employeeDAO = employeeDAO;
     }
 
-//    public Employee getApproverByExpenseId(int id) {
-//        return null;
-//    }
+
+    @Override
+    public Employee registerNewEmployee(Employee employee) {
+        return this.employeeDAO.createEmployee(employee);
+    }
 }
