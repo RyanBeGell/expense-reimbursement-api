@@ -24,4 +24,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getAllEmployees() {
         return this.employeeDAO.getAllEmployees();
     }
+
+    @Override
+    public Employee getEmployeeById(int ID) {
+        return employeeDAO.getEmployeeById(ID);
+    }
 }
