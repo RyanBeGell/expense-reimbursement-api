@@ -74,7 +74,7 @@ public class App {
             try {
                 boolean result = employeeService.deleteEmployeeById(id);
                 if (result) {
-                    context.result("Employee #[" + id + "]successfully deleted.");
+                    context.result("Employee #[" + id + "] successfully deleted.");
                 }}catch(ResourceNotFoundException e){
                     context.status(404);
                     context.result("Employee #[" + id + "] was not found.");
