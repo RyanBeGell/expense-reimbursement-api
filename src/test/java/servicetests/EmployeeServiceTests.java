@@ -7,6 +7,8 @@ import dev.begell.services.EmployeeService;
 import dev.begell.services.EmployeeServiceImpl;
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
 
 public class EmployeeServiceTests {
 
@@ -18,6 +20,16 @@ public class EmployeeServiceTests {
         Employee fred = new Employee(0,"Fred","Draper");
         Employee savedEmployee = employeeService.registerNewEmployee(fred);
         Assertions.assertNotEquals(0,savedEmployee.getEmployeeId());
+    }
+
+    @Test
+    void get_all_employees(){
+        Employee a = new Employee(0,"A","A");
+        Employee b = new Employee(0,"B","B");
+        Employee c = new Employee(0,"C","C");
+        List<Employee> employees = employeeService.getAllEmployees();
+        int totalEmployees = employees.size();
+        Assertions.assertTrue(totalEmployees >= 3);
     }
 
 }
