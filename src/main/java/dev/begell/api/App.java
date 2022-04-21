@@ -24,7 +24,7 @@ public class App {
             employeeService.registerNewEmployee(Employee);
             context.status(201);// successfully created employee - 201 for creation
             String EmployeeJSON = gson.toJson(Employee);
-            context.result(EmployeeJSON);
+            context.result("Employee added successfully: " + EmployeeJSON);
         });
 
         //read
@@ -45,7 +45,7 @@ public class App {
                 context.result(employeeJSON);
             }catch (ResourceNotFoundException e){
                 context.status(404);
-                context.result("The employee id " + id + "was not found");
+                context.result("Employee #[" + id + "] was not found");
             }
 
         });
@@ -58,13 +58,12 @@ public class App {
                 String body = context.body();
                 Employee employee = gson.fromJson(body, Employee.class);
                 employee.setEmployeeId(id);// the id in the uri should take precedence
-                Employee newEmployee;
-                newEmployee = employeeService.replaceEmployee(employee);
+                Employee newEmployee = employeeService.replaceEmployee(employee);
                 context.result("Employee #[ " + id + " ] " + "replaced with " +
                         newEmployee.getFirstName() + " " + newEmployee.getLastName());
             }catch (ResourceNotFoundException e){
                 context.status(404);
-                context.result("The employee id " + id + "was not found");
+                context.result("Employee #[" + id + "] was not found.");
             }
         });
 
@@ -72,14 +71,14 @@ public class App {
         app.delete("/employees/{id}", context -> {
             int id = Integer.parseInt(context.pathParam("id"));
 
-            boolean result = employeeService.deleteEmployeeById(id);
-            if(result){
-                context.status(204);
-                context.result("Employee # [ " + id + " ] successfully deleted");
-            }else{
-                context.status(404);
-                context.result("The employee id " + id + "was not found");
-            }
+            try {
+                boolean result = employeeService.deleteEmployeeById(id);
+                if (result) {
+                    context.result("Employee #[" + id + "]successfully deleted.");
+                }}catch(ResourceNotFoundException e){
+                    context.status(404);
+                    context.result("Employee #[" + id + "] was not found.");
+                }
         });
 
         //start app on port 7000
