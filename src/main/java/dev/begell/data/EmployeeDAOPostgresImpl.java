@@ -28,7 +28,6 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             log.info("Employee #" + employee.getEmployeeId() + "\tsuccessfully created.");
             return employee;
         } catch (SQLException e) {
-            e.printStackTrace();
             log.error(e.getMessage());
             return null;
         }
@@ -54,14 +53,12 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
                 else
                     throw new ResourceNotFoundException(id);
             } catch (ResourceNotFoundException e) {
-                e.printStackTrace();
                 log.error(e.getMessage());
                 return null;
             }
             return employee;
 
         } catch (SQLException e) {
-            e.printStackTrace();
             log.error(e.getMessage());
             return null;
         }
@@ -88,7 +85,6 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             return Employees;
 
         } catch (SQLException e) {
-            e.printStackTrace();
             log.error(e.getMessage());
             return null;
         }
@@ -111,7 +107,6 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
                     throw new ResourceNotFoundException(employee.getEmployeeId());
                 }
             }catch(ResourceNotFoundException e){
-                e.printStackTrace();
                 log.error(e.getMessage());
                 return null;
             }
@@ -119,7 +114,6 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             return employee;
 
         } catch (SQLException e) {
-            e.printStackTrace();
             log.error(e.getMessage());
             return null;
         }
@@ -136,7 +130,6 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             log.info("Employee #" + id + "\tsuccessfully deleted.");
             return  true;
         } catch (SQLException e) {
-            e.printStackTrace();
             log.error(e.getMessage());
             return false;
         }

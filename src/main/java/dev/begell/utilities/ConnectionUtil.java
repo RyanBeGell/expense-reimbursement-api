@@ -11,7 +11,6 @@ public class ConnectionUtil {
         try {
             return DriverManager.getConnection(System.getenv("reimbursementdb"));
         } catch (SQLException e) {
-            e.printStackTrace();
             return null;
         }
     }
