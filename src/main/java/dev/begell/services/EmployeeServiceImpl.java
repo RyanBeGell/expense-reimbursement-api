@@ -29,4 +29,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployeeById(int ID) {
         return employeeDAO.getEmployeeById(ID);
     }
+
+    @Override
+    public Employee replaceEmployee(Employee employee) {
+        return this.employeeDAO.updateEmployee(employee);
+    }
 }

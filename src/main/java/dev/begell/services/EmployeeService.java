@@ -11,5 +11,7 @@ public interface EmployeeService {
 
     Employee getEmployeeById(int ID);
 
+    Employee replaceEmployee(Employee employee);
+
 }
 

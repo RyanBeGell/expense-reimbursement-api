@@ -22,6 +22,9 @@ public class EmployeeServiceTests {
         Employee a = new Employee(0,"A","A");
         Employee b = new Employee(0,"B","B");
         Employee c = new Employee(0,"C","C");
+        employeeService.registerNewEmployee(a);
+        employeeService.registerNewEmployee(b);
+        employeeService.registerNewEmployee(c);
         List<Employee> employees = employeeService.getAllEmployees();
         int totalEmployees = employees.size();
         Assertions.assertTrue(totalEmployees >= 3);
@@ -44,5 +47,16 @@ public class EmployeeServiceTests {
         Assertions.assertEquals("Freddie", retrievedEmployee.getFirstName());
         Assertions.assertEquals("Testerman", retrievedEmployee.getLastName());
     }
+
+    @Test
+    @Order(4)
+    void replace_employee(){
+        EmployeeServiceTests.testEmployee.setFirstName("FreddieReplacement");
+        EmployeeServiceTests.testEmployee.setLastName("TestermanReplacement");
+        employeeService.replaceEmployee(testEmployee);// the new title should be saved to the database
+        Employee retrievedEmployee = employeeService.getEmployeeById(testEmployee.getEmployeeId());
+        Assertions.assertEquals("FreddieReplacement",retrievedEmployee.getFirstName());
+    }
+
 
 }
