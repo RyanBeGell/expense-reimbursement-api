@@ -1,7 +1,5 @@
 package servicetests;
 
-import daotests.EmployeeDAOTests;
-import dev.begell.data.EmployeeDAO;
 import dev.begell.data.EmployeeDAOPostgresImpl;
 import dev.begell.entities.Employee;
 import dev.begell.services.EmployeeService;
@@ -57,6 +55,14 @@ public class EmployeeServiceTests {
         Employee retrievedEmployee = employeeService.getEmployeeById(testEmployee.getEmployeeId());
         Assertions.assertEquals("FreddieReplacement",retrievedEmployee.getFirstName());
     }
+
+    @Test
+    @Order(5)
+    void delete_employee_by_id(){
+        boolean result = employeeService.deleteEmployeeById(testEmployee.getEmployeeId()); // true if successful
+        Assertions.assertTrue(result);
+    }
+
 
 
 }

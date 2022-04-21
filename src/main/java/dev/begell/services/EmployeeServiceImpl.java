@@ -34,4 +34,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee replaceEmployee(Employee employee) {
         return this.employeeDAO.updateEmployee(employee);
     }
+
+    @Override
+    public boolean deleteEmployeeById(int id) {
+        return this.employeeDAO.deleteEmployeeById(id);
+    }
 }

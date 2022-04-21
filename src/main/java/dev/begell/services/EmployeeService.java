@@ -13,5 +13,7 @@ public interface EmployeeService {
 
     Employee replaceEmployee(Employee employee);
 
+    boolean deleteEmployeeById(int id);
+
 }
 
