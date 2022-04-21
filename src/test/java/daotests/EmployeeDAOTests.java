@@ -3,6 +3,7 @@ package daotests;
 import dev.begell.data.EmployeeDAO;
 import dev.begell.data.EmployeeDAOPostgresImpl;
 import dev.begell.entities.Employee;
+import dev.begell.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -53,8 +54,9 @@ public class EmployeeDAOTests {
 
     @Test
     @Order(5)
-    void get_non_existent_Employee() {
-        Assertions.assertNull(employeeDAO.getEmployeeById(10000));
+    void get_non_existent_employee() {
+        Assertions.assertThrows(ResourceNotFoundException.class,() ->
+                employeeDAO.getEmployeeById(10000));
     }
 
     @Test
