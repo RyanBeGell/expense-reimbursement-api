@@ -44,7 +44,6 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             ResultSet rs = ps.executeQuery();
 
             Employee employee = new Employee();
-            try {
                 if (rs.next()) {    //if there is a first record
                     employee.setEmployeeId((rs.getInt("employee_id")));
                     employee.setFirstName((rs.getString("first_name")));
@@ -52,10 +51,6 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
                 }
                 else
                     throw new ResourceNotFoundException(id);
-            } catch (ResourceNotFoundException e) {
-                log.error(e.getMessage());
-                return null;
-            }
             return employee;
 
         } catch (SQLException e) {
@@ -102,16 +97,13 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             ps.setInt(3, employee.getEmployeeId());
             int rowsUpdated = ps.executeUpdate();
 
-            try {
-                if(rowsUpdated == 0){
-                    throw new ResourceNotFoundException(employee.getEmployeeId());
-                }
-            }catch(ResourceNotFoundException e){
-                log.error(e.getMessage());
-                return null;
+            if(rowsUpdated == 0){
+                throw new ResourceNotFoundException(employee.getEmployeeId());
             }
-            log.info("Employee #" + employee.getEmployeeId() + "\tsuccessfully updated.");
-            return employee;
+            else {
+                log.info("Employee #" + employee.getEmployeeId() + "\tsuccessfully updated.");
+                return employee;
+            }
 
         } catch (SQLException e) {
             log.error(e.getMessage());
@@ -128,7 +120,7 @@ public class EmployeeDAOPostgresImpl implements EmployeeDAO {
             ps.setInt(1, id);
             ps.execute();
             log.info("Employee #" + id + "\tsuccessfully deleted.");
-            return  true;
+            return true;
         } catch (SQLException e) {
             log.error(e.getMessage());
             return false;
