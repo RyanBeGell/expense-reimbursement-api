@@ -5,7 +5,6 @@ import dev.begell.entities.Employee;
 import dev.begell.services.EmployeeService;
 import dev.begell.services.EmployeeServiceImpl;
 import org.junit.jupiter.api.*;
-
 import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //for running ordered test cases
@@ -62,7 +61,5 @@ public class EmployeeServiceTests {
         boolean result = employeeService.deleteEmployeeById(testEmployee.getEmployeeId()); // true if successful
         Assertions.assertTrue(result);
     }
-
-
 
 }
