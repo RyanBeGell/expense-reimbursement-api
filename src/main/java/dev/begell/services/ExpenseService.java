@@ -8,7 +8,7 @@ public interface ExpenseService {
 
     Expense registerNewExpense(Expense expense);
 
-    Expense retrieveExpenseById(Expense expense);
+    Expense retrieveExpenseByExpenseId(int id);
 
     Expense approveExpense(Expense expense);
 
@@ -16,6 +16,11 @@ public interface ExpenseService {
 
     Expense deleteExpenseById(int id);
 
+    Expense replaceExpense(Expense expense);
+
+    List<Expense> getAllExpensesByEmployeeId(int id);
+
     List<Expense> getAllExpenses();
 
+    List<Expense> getAllPendingExpenses();
 }

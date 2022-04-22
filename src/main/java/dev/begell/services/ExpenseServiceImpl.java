@@ -6,14 +6,13 @@ import java.util.List;
 
 public class ExpenseServiceImpl implements ExpenseService {
 
-
     @Override
     public Expense registerNewExpense(Expense expense) {
         return null;
     }
 
     @Override
-    public Expense retrieveExpenseById(Expense expense) {
+    public Expense retrieveExpenseByExpenseId(int id) {
         return null;
     }
 
@@ -33,7 +32,22 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    public Expense replaceExpense(Expense expense) {
+        return null;
+    }
+
+    @Override
+    public List<Expense> getAllExpensesByEmployeeId(int id) {
+        return null;
+    }
+
+    @Override
     public List<Expense> getAllExpenses() {
+        return null;
+    }
+
+    @Override
+    public List<Expense> getAllPendingExpenses() {
         return null;
     }
 }
