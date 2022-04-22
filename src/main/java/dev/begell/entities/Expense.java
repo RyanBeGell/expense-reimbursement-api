@@ -4,16 +4,24 @@ import lombok.*;
 
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Expense {
     private int expenseId;
-    @Setter(AccessLevel.NONE)   //stop the lambok @data from auto-generating a setter for amount
-    double amount;
+    @Setter(AccessLevel.NONE)   //stop the lombok @data from auto-generating the amount setter
+    private double amount;
     private int empId;
-    private boolean approvalStatus;
-//  private int approverEmpId;
-    private int expenseDate;
+    private boolean approved = false;
+    private long expenseDate;
+    private String expenseDescription;
+
+    //some args constructor without approval status
+    public Expense(int expenseId, double amount, int empId, long expenseDate, String expenseDescription) {
+        this.expenseId = expenseId;
+        this.amount = amount;
+        this.empId = empId;
+        this.expenseDate = expenseDate;
+        this.expenseDescription = expenseDescription;
+    }
 
     public void setAmount(double amount) {
         if(amount > 0)
@@ -21,4 +29,5 @@ public class Expense {
         else
             throw new IllegalArgumentException("Expense amounts can not be negative.");
     }
+
 }
