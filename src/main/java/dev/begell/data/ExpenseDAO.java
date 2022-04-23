@@ -1,7 +1,6 @@
 package dev.begell.data;
 
 
-import dev.begell.entities.Employee;
 import dev.begell.entities.Expense;
 
 import java.util.List;
