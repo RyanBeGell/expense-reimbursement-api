@@ -23,7 +23,7 @@ public class ExpenseDAOPostgresImpl implements ExpenseDAO{
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setDouble(1, expense.getAmount());
             ps.setInt(2, expense.getEmpId());
-            ps.setBoolean(3,false);
+            ps.setBoolean(3, false);
             ps.setLong(4, date.getTime());
             ps.setString(5, expense.getExpenseDescription());
 
@@ -102,7 +102,7 @@ public class ExpenseDAOPostgresImpl implements ExpenseDAO{
         try {
             Connection conn = ConnectionUtil.createConnection();
             String sql = "update expense set amount = ?, emp_id = ?, is_approved = ?, expense_date = ?, " +
-                    "expense_description = ?, where expense_id = ?";
+                    "expense_description = ? where expense_id = ?";
             assert conn != null;
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setDouble(1, expense.getAmount());
@@ -110,7 +110,7 @@ public class ExpenseDAOPostgresImpl implements ExpenseDAO{
             ps.setBoolean(3, expense.isApproved());
             ps.setLong(4, date.getTime());
             ps.setString(5, expense.getExpenseDescription());
-            ps.setInt(6, expense.getEmpId());
+            ps.setInt(6, expense.getExpenseId());
             int rowsUpdated = ps.executeUpdate();
 
             if(rowsUpdated == 0){
