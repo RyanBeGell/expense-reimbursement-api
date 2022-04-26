@@ -23,7 +23,7 @@ public class ExpenseDAOPostgresImpl implements ExpenseDAO{
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setDouble(1, expense.getAmount());
             ps.setInt(2, expense.getEmpId());
-            ps.setBoolean(3, false);
+            ps.setString(3, expense.getApproval());
             ps.setLong(4, date.getTime());
             ps.setString(5, expense.getExpenseDescription());
 
@@ -57,6 +57,7 @@ public class ExpenseDAOPostgresImpl implements ExpenseDAO{
                 expense.setAmount(rs.getDouble("amount"));
                 expense.setEmpId(rs.getInt("emp_id"));
                 expense.setExpenseDate(rs.getLong("expense_date"));
+                expense.setApproval(rs.getString("approval"));
                 expense.setExpenseDescription(rs.getString("expense_description"));
             }
             else
@@ -85,6 +86,7 @@ public class ExpenseDAOPostgresImpl implements ExpenseDAO{
                 expense.setAmount(rs.getDouble("amount"));
                 expense.setEmpId(rs.getInt("emp_id"));
                 expense.setExpenseDate(rs.getLong("expense_date"));
+                expense.setApproval(rs.getString("approval"));
                 expense.setExpenseDescription(rs.getString("expense_description"));
                 Expenses.add(expense);
             }
@@ -101,13 +103,13 @@ public class ExpenseDAOPostgresImpl implements ExpenseDAO{
     public Expense updateExpense(Expense expense) {
         try {
             Connection conn = ConnectionUtil.createConnection();
-            String sql = "update expense set amount = ?, emp_id = ?, is_approved = ?, expense_date = ?, " +
+            String sql = "update expense set amount = ?, emp_id = ?, approval = ?, expense_date = ?, " +
                     "expense_description = ? where expense_id = ?";
             assert conn != null;
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setDouble(1, expense.getAmount());
             ps.setInt(2, expense.getEmpId());
-            ps.setBoolean(3, expense.isApproved());
+            ps.setString(3, expense.getApproval());
             ps.setLong(4, date.getTime());
             ps.setString(5, expense.getExpenseDescription());
             ps.setInt(6, expense.getExpenseId());
