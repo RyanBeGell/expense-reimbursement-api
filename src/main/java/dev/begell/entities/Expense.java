@@ -10,7 +10,7 @@ public class Expense {
     @Setter(AccessLevel.NONE)   //stop the lombok @data from auto-generating the amount setter
     private double amount;
     private int empId;
-    private boolean approved = false;
+    private String approval = "pending";
     private long expenseDate;
     private String expenseDescription;
 
@@ -29,5 +29,4 @@ public class Expense {
         else
             throw new IllegalArgumentException("Expense amounts can not be negative.");
     }
-
 }
