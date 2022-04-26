@@ -2,9 +2,12 @@ package dev.begell.services;
 
 import dev.begell.data.ExpenseDAO;
 import dev.begell.entities.Expense;
+import dev.begell.exceptions.ImmutableExpenseException;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
+@Log4j2
 public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseDAO expenseDAO;
@@ -26,28 +29,47 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public boolean approveExpense(Expense expense) {
-        expense.setApproved(true);
-        return true;
+        if(expense.getApproval().equals("approved") || expense.getApproval().equals("denied")) {
+            log.warn("An attempt was made to change expense #[" + expense.getExpenseId() + "]");
+            throw new ImmutableExpenseException(expense.getExpenseId());
+        } else {
+            expense.setApproval("approved");
+            expenseDAO.updateExpense(expense);
+            return true;
+        }
     }
 
     @Override
     public boolean denyExpense(Expense expense) {
-        expense.setApproved(false);
-        return true;
+        if (expense.getApproval().equals("approved") || expense.getApproval().equals("denied")){
+            log.warn("An attempt was made to change expense #[" + expense.getExpenseId() + "]");
+            throw new ImmutableExpenseException(expense.getExpenseId());
+        } else {
+            expense.setApproval("denied");
+            expenseDAO.updateExpense(expense);
+            return true;
+        }
     }
 
     @Override
     public Boolean deleteExpenseById(int id) {
-        if(this.expenseDAO.getExpenseById(id) != null) {
-            return this.expenseDAO.deleteExpenseById(id);
+        if (expenseDAO.getExpenseById(id).getApproval().equals("approved") ||
+                expenseDAO.getExpenseById(id).getApproval().equals("denied")){
+            log.warn("An attempt was made to delete approved expense #[" + id + "]");
+            throw new ImmutableExpenseException(id);
         } else {
-            return false;
+            return this.expenseDAO.deleteExpenseById(id);
         }
     }
 
     @Override
     public Expense replaceExpense(Expense expense) {
-        return this.expenseDAO.updateExpense(expense);
+        if (expense.getApproval().equals("approved") || expense.getApproval().equals("denied")){
+            log.warn("An attempt was made to change expense #[" + expense.getExpenseId() + "]");
+            throw new ImmutableExpenseException(expense.getExpenseId());
+        } else {
+            return this.expenseDAO.updateExpense(expense);
+        }
     }
 
     @Override
@@ -70,7 +92,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<Expense> getAllPendingExpenses() {
         List<Expense> expenses = expenseDAO.getAllExpenses();
         expenses.forEach(expense -> {
-            if(!expense.isApproved())
+            if(!expense.getApproval().equals("pending"))
                 expenses.remove(expense);
         });
         return expenses;
