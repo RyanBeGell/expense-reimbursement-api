@@ -53,7 +53,7 @@ public class ExpenseDAOTests {
     @Test
     @Order(3)
     void update_Expense(){
-        ExpenseDAOTests.testExpense.setApproved(true);
+        ExpenseDAOTests.testExpense.setApproval("denied");
         ExpenseDAOTests.testExpense.setAmount(1000);
         ExpenseDAOTests.testExpense.setEmpId(testEmployee2.getEmployeeId());
         ExpenseDAOTests.testExpense.setExpenseDescription("Travel");
