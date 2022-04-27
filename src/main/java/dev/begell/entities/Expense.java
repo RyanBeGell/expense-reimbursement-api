@@ -10,16 +10,15 @@ public class Expense {
     @Setter(AccessLevel.NONE)   //stop the lombok @data from auto-generating the amount setter
     private double amount;
     private int empId;
-    private String approval = "pending";
+    private String approval = "pending";    //automatically set new expenses to pending
     private long expenseDate;
     private String expenseDescription;
 
-    //some args constructor without approval status
-    public Expense(int expenseId, double amount, int empId, long expenseDate, String expenseDescription) {
+    //some args constructor without approval status/date
+    public Expense(int expenseId, double amount, int empId, String expenseDescription) {
         this.expenseId = expenseId;
         this.amount = amount;
         this.empId = empId;
-        this.expenseDate = expenseDate;
         this.expenseDescription = expenseDescription;
     }
 
