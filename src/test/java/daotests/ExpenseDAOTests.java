@@ -8,15 +8,11 @@ import dev.begell.entities.Employee;
 import dev.begell.entities.Expense;
 import dev.begell.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.*;
-
-import java.util.Date;
-
 import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //for running ordered test cases
 public class ExpenseDAOTests {
 
-    static Date date = new Date();
     static ExpenseDAO expenseDAO = new ExpenseDAOPostgresImpl();
     static Expense testExpense = null;
     static EmployeeDAO employeeDAO = new EmployeeDAOPostgresImpl();
@@ -33,8 +29,7 @@ public class ExpenseDAOTests {
         // An entity that is created but not yet saved should have an id of 0
         // once saved that Expense should be some non-zero value
 
-        Expense expense1 = new Expense(0,500, testEmployee.getEmployeeId(), date.getTime(),
-                "Food");
+        Expense expense1 = new Expense(0,500, testEmployee.getEmployeeId(),"Food");
         Expense savedExpense = expenseDAO.createExpense(expense1);
         ExpenseDAOTests.testExpense = savedExpense;// An Expense I can use in other tests
         Assertions.assertNotEquals(0, savedExpense.getAmount());
@@ -80,9 +75,9 @@ public class ExpenseDAOTests {
     @Test
     @Order(6)
     void get_all_expenses(){
-        Expense a = new Expense(0,100.0, testEmployee.getEmployeeId(), date.getTime(), "test");
-        Expense b = new Expense(0,200.0, testEmployee.getEmployeeId(), date.getTime(), "test");
-        Expense c = new Expense(0,300.0, testEmployee.getEmployeeId(), date.getTime(), "test");
+        Expense a = new Expense(0,100.0, testEmployee.getEmployeeId(),"test");
+        Expense b = new Expense(0,200.0, testEmployee.getEmployeeId(),"test");
+        Expense c = new Expense(0,300.0, testEmployee.getEmployeeId(),"test");
         expenseDAO.createExpense(a);
         expenseDAO.createExpense(b);
         expenseDAO.createExpense(c);
