@@ -5,6 +5,7 @@ import dev.begell.entities.Expense;
 import dev.begell.exceptions.ImmutableExpenseException;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -75,12 +76,13 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public List<Expense> getAllExpensesByEmployeeId(int id) {
         List<Expense> expenses = expenseDAO.getAllExpenses();
+        List<Expense> employeeExpenses = new ArrayList<>();
         expenses.forEach(expense ->{
-            if(expense.getExpenseId() != id){
-                expenses.remove(expense);
+            if(expense.getEmpId() == id){
+                employeeExpenses.add(expense);
             }
         });
-        return expenses;
+        return employeeExpenses;
     }
 
     @Override
@@ -91,10 +93,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public List<Expense> getAllPendingExpenses() {
         List<Expense> expenses = expenseDAO.getAllExpenses();
+        List<Expense> pendingExpenses = new ArrayList<>();
         expenses.forEach(expense -> {
-            if(!expense.getApproval().equals("pending"))
-                expenses.remove(expense);
+            if(expense.getApproval().equals("pending"))
+                pendingExpenses.add(expense);
         });
-        return expenses;
+        return pendingExpenses;
     }
 }
