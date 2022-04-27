@@ -1,6 +1,7 @@
 package dev.begell.api;
 
 import com.google.gson.Gson;
+import dev.begell.exceptions.ImmutableExpenseException;
 import dev.begell.exceptions.ResourceNotFoundException;
 import io.javalin.Javalin;
 import dev.begell.entities.*;
@@ -85,6 +86,8 @@ public class App {
 
         //expense paths
         //create
+
+        //add a new expense
         app.post("/expenses", context -> {
             String body = context.body();
             Expense expense = gson.fromJson(body, Expense.class);// JSON fields need to match what the fields are in the class
@@ -106,16 +109,6 @@ public class App {
             context.result("Expense added successfully to employee #[" + id + "] : " + ExpenseJSON);
         });
 
-        app.post("/expenses", context -> {
-            String body = context.body();
-            Expense expense = gson.fromJson(body, Expense.class);// JSON fields need to match what the fields are in the class
-            expenseService.registerNewExpense(expense);
-            context.status(201);// successfully created expense - 201 for creation
-            String ExpenseJSON = gson.toJson(expense);
-            context.result("Expense added successfully: " + ExpenseJSON);
-        });
-
-
         //read
         //get all expenses
         app.get("/expenses", context -> {
@@ -125,14 +118,14 @@ public class App {
         });
 
         //get all pending expenses
-        app.get("/expenses", context -> {
+        app.get("/expenses?status=pending", context -> {
             List<Expense> expenseList = expenseService.getAllPendingExpenses();
             String json = gson.toJson((expenseList));
             context.result(json);
         });
 
         //get specific expense
-        app.get("/employees/{id}/expenses", context -> {
+        app.get("/expenses/{id}", context -> {
 
             int id = Integer.parseInt(context.pathParam("id"));
 
@@ -141,11 +134,11 @@ public class App {
                 context.result(expenseJSON);
             }catch (ResourceNotFoundException e){
                 context.status(404);
-                context.result("Employee #[" + id + "] was not found");
+                context.result("Expense #[" + id + "] was not found");
             }
         });
 
-        //get all expenses from a specific employee
+        //get expenses from a specific employee
         app.get("/employees/{id}/expenses", context -> {
             int id = Integer.parseInt(context.pathParam("id"));
 
@@ -184,11 +177,14 @@ public class App {
             try{
                 String body = context.body();
                 Expense expense = gson.fromJson(body, Expense.class);
-                expense.setApproved(true); //approve the expense
+                expense.setApproval("approved"); //approve the expense
                 context.result("Expense #[ " + id + " ] " + "approved.");
             }catch (ResourceNotFoundException e){
                 context.status(404);
                 context.result("Expense #[" + id + "] was not found.");
+            }catch (ImmutableExpenseException e){
+                context.status(405);
+                context.result(e.getMessage());
             }
         });
 
@@ -199,11 +195,14 @@ public class App {
             try{
                 String body = context.body();
                 Expense expense = gson.fromJson(body, Expense.class);
-                expense.setApproved(false); //approve the expense
+                expense.setApproval("approved"); //approve the expense
                 context.result("Expense #[ " + id + " ] " + "denied.");
             }catch (ResourceNotFoundException e){
                 context.status(404);
                 context.result("Expense #[" + id + "] was not found.");
+            }catch (ImmutableExpenseException e){
+                context.status(405);
+                context.result(e.getMessage());
             }
         });
 
@@ -220,8 +219,6 @@ public class App {
                 context.result("Expense #[" + id + "] was not found.");
             }
         });
-
-
 
         //start app on port 7000
         app.start(7000);
