@@ -138,7 +138,7 @@ public class ExpenseServiceTests {
         expenseService.registerNewExpense(a);
         expenseService.registerNewExpense(b);
         expenseService.registerNewExpense(c);
-        List<Expense> expenses = expenseService.getAllPendingExpenses();
+        List<Expense> expenses = expenseService.getAllExpensesByApprovalStatus("pending");
         int totalExpenses = expenses.size();
         Assertions.assertTrue(totalExpenses >= 3);  //we've just added 3 pending expenses, should be min 3
         boolean allPending = true;

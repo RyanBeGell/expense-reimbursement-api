@@ -91,13 +91,14 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<Expense> getAllPendingExpenses() {
+    public List<Expense> getAllExpensesByApprovalStatus(String status) {
         List<Expense> expenses = expenseDAO.getAllExpenses();
-        List<Expense> pendingExpenses = new ArrayList<>();
+        List<Expense> resultExpenses = new ArrayList<>();
         expenses.forEach(expense -> {
-            if(expense.getApproval().equals("pending"))
-                pendingExpenses.add(expense);
+            if(expense.getApproval().equals(status)) {
+                resultExpenses.add(expense);
+            }
         });
-        return pendingExpenses;
+        return resultExpenses;
     }
 }

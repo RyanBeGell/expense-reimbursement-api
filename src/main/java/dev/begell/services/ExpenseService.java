@@ -22,5 +22,5 @@ public interface ExpenseService {
 
     List<Expense> getAllExpenses();
 
-    List<Expense> getAllPendingExpenses();
+    List<Expense> getAllExpensesByApprovalStatus(String status);
 }
