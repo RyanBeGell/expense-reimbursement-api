@@ -7,6 +7,8 @@ import io.javalin.Javalin;
 import dev.begell.entities.*;
 import dev.begell.data.*;
 import dev.begell.services.*;
+import io.javalin.http.Context;
+
 import java.util.List;
 
 public class App {
@@ -98,7 +100,7 @@ public class App {
         });
 
         //adds expense to specific employee
-        app.post("/employee/{id}/expenses", context -> {
+        app.post("/employees/{id}/expenses", context -> {
             String body = context.body();
             int id = Integer.parseInt(context.pathParam("id"));
             Expense expense = gson.fromJson(body, Expense.class);// JSON fields need to match what the fields are in the class
@@ -112,17 +114,22 @@ public class App {
         //read
         //get all expenses
         app.get("/expenses", context -> {
-            List<Expense> expenseList = expenseService.getAllExpenses();
-            String json = gson.toJson((expenseList));
-            context.result(json);
+            String status = context.queryParam("status");
+            List<Expense> expenseList;
+            if(status == null) {
+                expenseList = expenseService.getAllExpenses();
+                String json = gson.toJson((expenseList));
+                context.result(json);
+            }else if(status.toLowerCase().matches("pending|approved|denied")){
+                expenseList = expenseService.getAllExpensesByApprovalStatus(status.toLowerCase());
+                String json = gson.toJson((expenseList));
+                context.result(json);
+            }else{
+                context.status(404);
+                context.result("Invalid status for expenses: The status [" + status + "] was not found.");
+            }
         });
 
-        //get all pending expenses
-        app.get("/expenses?status=pending", context -> {
-            List<Expense> expenseList = expenseService.getAllPendingExpenses();
-            String json = gson.toJson((expenseList));
-            context.result(json);
-        });
 
         //get specific expense
         app.get("/expenses/{id}", context -> {
@@ -167,6 +174,9 @@ public class App {
             }catch (ResourceNotFoundException e){
                 context.status(404);
                 context.result("Expense #[" + id + "] was not found.");
+            } catch (ImmutableExpenseException e){
+                context.status(400);
+                context.result("Expense #[" + id + "] has already been approved/denied and can not be changed.");
             }
         });
 
@@ -175,8 +185,7 @@ public class App {
             int id = Integer.parseInt(context.pathParam("id"));
 
             try{
-                String body = context.body();
-                Expense expense = gson.fromJson(body, Expense.class);
+                Expense expense =  expenseService.retrieveExpenseByExpenseId(id);
                 expense.setApproval("approved"); //approve the expense
                 context.result("Expense #[ " + id + " ] " + "approved.");
             }catch (ResourceNotFoundException e){
@@ -193,8 +202,7 @@ public class App {
             int id = Integer.parseInt(context.pathParam("id"));
 
             try{
-                String body = context.body();
-                Expense expense = gson.fromJson(body, Expense.class);
+                Expense expense =  expenseService.retrieveExpenseByExpenseId(id);
                 expense.setApproval("approved"); //approve the expense
                 context.result("Expense #[ " + id + " ] " + "denied.");
             }catch (ResourceNotFoundException e){
