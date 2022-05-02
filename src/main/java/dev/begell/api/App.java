@@ -176,7 +176,7 @@ public class App {
                 context.result("Expense #[" + id + "] was not found.");
             } catch (ImmutableExpenseException e){
                 context.status(400);
-                context.result("Expense #[" + id + "] has already been approved/denied and can not be changed.");
+                context.result(e.getMessage());
             }
         });
 
@@ -222,10 +222,14 @@ public class App {
                 boolean result = expenseService.deleteExpenseById(id);
                 if (result) {
                     context.result("Expense #[" + id + "] successfully deleted.");
-                }}catch(ResourceNotFoundException e){
+                }
+            }catch(ResourceNotFoundException e){
                 context.status(404);
                 context.result("Expense #[" + id + "] was not found.");
-            }
+            }catch (ImmutableExpenseException e){
+            context.status(400);
+            context.result(e.getMessage());
+        }
         });
 
         //start app on port 7000
