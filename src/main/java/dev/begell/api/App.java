@@ -168,6 +168,8 @@ public class App {
             try {
                 String body = context.body();
                 Expense expense = gson.fromJson(body, Expense.class);
+                if(expenseService.retrieveExpenseByExpenseId(id).getApproval().equals("approved") || expenseService.retrieveExpenseByExpenseId(id).getApproval().equals("denied"))
+                    throw new ImmutableExpenseException(id);
                 expense.setExpenseId(id);// the id in the uri should take precedence
                 expenseService.replaceExpense(expense);
                 context.result("Expense #[ " + id + " ] " + "replaced.");
@@ -186,7 +188,7 @@ public class App {
 
             try{
                 Expense expense =  expenseService.retrieveExpenseByExpenseId(id);
-                expense.setApproval("approved"); //approve the expense
+                expenseService.approveExpense(expense);
                 context.result("Expense #[ " + id + " ] " + "approved.");
             }catch (ResourceNotFoundException e){
                 context.status(404);
@@ -203,7 +205,7 @@ public class App {
 
             try{
                 Expense expense =  expenseService.retrieveExpenseByExpenseId(id);
-                expense.setApproval("approved"); //approve the expense
+                expenseService.denyExpense(expense);
                 context.result("Expense #[ " + id + " ] " + "denied.");
             }catch (ResourceNotFoundException e){
                 context.status(404);
